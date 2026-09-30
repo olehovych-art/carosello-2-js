@@ -44,3 +44,42 @@ const nextBtn = document.getElementById('next-btn');
 
 // contenitore delle miniature a destra
 const thumbnailsContainer = document.getElementById('thumbnails-container');
+
+// Funzione per aggiornare l'interfaccia in base a currentIndex
+function updateCarousel() {
+  // Recuperiamo l'oggetto corrente dall'array
+  const currentPlace = places[currentIndex];
+
+  // Aggiorniamo l'immagine grande, il titolo e la descrizione
+  mainImage.src = currentPlace.image;
+  slideTitle.textContent = currentPlace.title;
+  slideDescription.textContent = currentPlace.description;
+}
+
+// Inizializziamo la prima vista al caricamento del file
+updateCarousel();
+
+
+// Gestione click bottone "Giù" (Successivo)
+nextBtn.addEventListener('click', function () {
+  currentIndex++; // Aumentiamo l'indice di 1
+
+  // Se superiamo l'ultima foto, torniamo alla prima (indice 0)
+  if (currentIndex >= places.length) {
+    currentIndex = 0;
+  }
+
+  updateCarousel(); // Aggiorniamo la vista
+});
+
+// Gestione click bottone "Su" (Precedente)
+prevBtn.addEventListener('click', function () {
+  currentIndex--; // Diminuiamo l'indice di 1
+
+  // Se andiamo sotto lo 0, passiamo all'ultima foto dell'array
+  if (currentIndex < 0) {
+    currentIndex = places.length - 1;
+  }
+
+  updateCarousel(); // Aggiorniamo la vista
+});
