@@ -54,6 +54,9 @@ function updateCarousel() {
   mainImage.src = currentPlace.image;
   slideTitle.textContent = currentPlace.title;
   slideDescription.textContent = currentPlace.description;
+
+  // Richiamiamo la generazione delle miniature
+  generateThumbnails();
 }
 
 // Inizializziamo la prima vista al caricamento del file
@@ -83,3 +86,61 @@ prevBtn.addEventListener('click', function () {
 
   updateCarousel(); // Aggiorniamo la vista
 });
+
+// Funzione per generare le miniature a destra
+function generateThumbnails() {
+  // Svuotiamo il contenitore per sicurezza
+  thumbnailsContainer.innerHTML = '';
+
+  // Cicliamo l'array di oggetti
+  places.forEach((place, index) => {
+    // Creiamo un nuovo elemento img
+    const thumb = document.createElement('img');
+    thumb.src = place.image;
+    thumb.alt = place.title;
+    thumb.classList.add('img-fluid', 'flex-fill', 'object-fit-cover', 'thumbnail');
+
+    // Se l'indice della miniatura corrisponde a quello attivo, aggiungiamo la classe active
+    if (index === currentIndex) {
+      thumb.classList.add('active');
+    }
+
+    // Permettiamo di cambiare immagine cliccando sulla miniatura stessa
+    thumb.addEventListener('click', function () {
+      currentIndex = index;
+      updateCarousel();
+    });
+
+    // Inseriamo la miniatura nel contenitore HTML
+    thumbnailsContainer.appendChild(thumb);
+  });
+}
+
+// Funzione per generare le miniature nel contenitore a destra
+function generateThumbnails() {
+  // 1. Svuotiamo il contenitore HTML per non sovrapporre le miniature
+  thumbnailsContainer.innerHTML = '';
+
+  // 2. Cicliamo l'array dei dati per creare ogni miniatura
+  places.forEach((place, index) => {
+    // Creiamo il tag img
+    const thumb = document.createElement('img');
+    thumb.src = place.image;
+    thumb.alt = place.title;
+    thumb.classList.add('img-fluid', 'flex-fill', 'object-fit-cover', 'thumbnail');
+
+    // Se l'indice della miniatura è quello attivo, aggiungiamo la classe active
+    if (index === currentIndex) {
+      thumb.classList.add('active');
+    }
+
+    // 3. Aggiungiamo l'evento click alla singola miniatura
+    thumb.addEventListener('click', function () {
+      currentIndex = index; // Aggiorniamo l'indice con quello della miniatura cliccata
+      updateCarousel();     // Ridisegniamo il carosello
+    });
+
+    // Inseriamo l'immagine creata dentro il contenitore HTML
+    thumbnailsContainer.appendChild(thumb);
+  });
+}
