@@ -144,3 +144,22 @@ function generateThumbnails() {
     thumbnailsContainer.appendChild(thumb);
   });
 }
+// Gestione della navigazione tramite tastiera
+document.addEventListener('keydown', function (event) {
+  // Verifichiamo quale tasto è stato premuto
+  if (event.key === 'ArrowDown') {
+    // Se premuta la freccia GIÙ, incrementiamo l'indice
+    currentIndex++;
+    if (currentIndex >= places.length) {
+      currentIndex = 0;
+    }
+    updateCarousel();
+  } else if (event.key === 'ArrowUp') {
+    // Se premuta la freccia SU, decrementiamo l'indice
+    currentIndex--;
+    if (currentIndex < 0) {
+      currentIndex = places.length - 1;
+    }
+    updateCarousel();
+  }
+});
