@@ -51,6 +51,11 @@ function updateCarousel() {
   const currentPlace = places[currentIndex];
 
   // Aggiorniamo l'immagine grande, il titolo e la descrizione
+  mainImage.onload = function () {
+    mainImage.classList.remove('fade-in');
+    void mainImage.offsetWidth;
+    mainImage.classList.add('fade-in');
+  };
   mainImage.src = currentPlace.image;
   slideTitle.textContent = currentPlace.title;
   slideDescription.textContent = currentPlace.description;
@@ -163,3 +168,11 @@ document.addEventListener('keydown', function (event) {
     updateCarousel();
   }
 });
+
+setInterval(function () {
+  currentIndex++;
+  if (currentIndex >= places.length) {
+    currentIndex = 0;
+  }
+  updateCarousel();
+}, 3000);
