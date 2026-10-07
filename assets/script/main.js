@@ -41,6 +41,8 @@ const slideDescription = document.getElementById('slide-description');
 // bottoni per aggiungere l'evento del click
 const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
+const autoplayBtn = document.getElementById('autoplay-btn');
+const autoplayIcon = document.getElementById('autoplay-icon');
 
 // contenitore delle miniature a destra
 const thumbnailsContainer = document.getElementById('thumbnails-container');
@@ -169,10 +171,27 @@ document.addEventListener('keydown', function (event) {
   }
 });
 
-setInterval(function () {
+function advanceSlide() {
   currentIndex++;
   if (currentIndex >= places.length) {
     currentIndex = 0;
   }
   updateCarousel();
-}, 3000);
+}
+
+let autoplayInterval = setInterval(advanceSlide, 3000);
+
+autoplayBtn.addEventListener('click', function () {
+  if (autoplayInterval !== null) {
+    clearInterval(autoplayInterval);
+    autoplayInterval = null;
+    autoplayIcon.classList.replace('bi-pause-fill', 'bi-play-fill');
+    autoplayBtn.setAttribute('aria-label', 'Riprendi autoplay');
+    autoplayBtn.title = 'Riprendi autoplay';
+  } else {
+    autoplayInterval = setInterval(advanceSlide, 3000);
+    autoplayIcon.classList.replace('bi-play-fill', 'bi-pause-fill');
+    autoplayBtn.setAttribute('aria-label', 'Metti in pausa autoplay');
+    autoplayBtn.title = 'Metti in pausa autoplay';
+  }
+});
